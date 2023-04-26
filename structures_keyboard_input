@@ -1,0 +1,103 @@
+#include <stdio.h>
+
+const int N = 3;
+
+struct person {
+    int group;
+    char name[10];
+    int marks[5];
+};
+
+int bad_marks_counter(struct person srud[]);
+int swap_for_structures(struct person a, struct person b);
+int sort_by_group_number (struct person ss[]);
+int sort_by_surname (struct person aa[]);
+
+int main() {
+    struct person students[N];
+    for (int i = 0; i < N; ++i) {
+        printf("Input surname\n");
+        gets(students[i].name);
+    }
+    for (int i = 0; i < N; ++i) { //ввод данных о всех студентах с клавиатуры
+        printf("Input %s's group\n", students[i].name);
+        scanf_s("%d", &students[i].group);
+        printf("Input marks\n");
+        for (int j = 0; j < 3; ++j) {
+            scanf_s("%d", &students[i].marks[j]);
+        }
+    }
+    for (int i = 0; i < N; ++i) { //консольный вывод
+        printf("Name: %s Group: %d ", students[i].name, students[i].group);
+        printf("Marks: ");
+        for (int j = 0; j < 3; j++) {
+            printf("%d ", students[i].marks[j]);
+        }
+        printf("\n");
+    }
+    bad_marks_counter(students);
+    sort_by_group_number(students);
+    sort_by_surname(students);
+    return 0;
+}
+
+int bad_marks_counter(struct person srud[]){//функция, подсчитывающая средний балл студента
+    int good_marks_students_counter = 0;
+    for (int i = 0; i < N; ++i) {
+        float count = 0;
+        float average_mark;
+        for (int j = 0; j < 3; ++j) {
+            count += srud[i].marks[j];
+        }
+        average_mark = (float)count/3;
+        if (average_mark > 4) {
+            good_marks_students_counter += 1;
+            printf("Students with a good marks: %s, average mark: %f\n", srud[i].name, average_mark);
+        }
+    }
+    if (good_marks_students_counter == 0) {
+        printf("Students with good marks are not found");
+    }
+    else {
+        printf("Number of students with a good marks: %d\n", good_marks_students_counter);
+    }
+}
+
+int swap_for_structures(struct person a, struct person b) {
+    struct person c = a;
+    a = b;
+    b = c;
+}
+int get_group(struct person ss) {
+    return ss.group;
+}
+int sort_by_group_number (struct person ss[]) { //функция, сортирующая по номеру группы
+    printf("Sort by group number: \n");
+    struct  person tmp;
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < N - i - 1; ++j) {
+            if (get_group(ss[j]) > get_group(ss[j + 1])) {
+                tmp = ss[j];
+                ss[j] = ss[j + 1];
+                ss[j + 1] = tmp;
+            }
+        }
+    }
+    for (int i = 0; i < N; ++i) {
+        printf("Name: %s\n Group: %d\n", ss[i].name, ss[i].group);
+    }
+}
+
+int sort_by_surname (struct person aa[]){
+    printf("Sort by surname \n");
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < N - 1 - i; ++j) {
+            if (aa[j].name[0] < aa[j+1].name[0]) {
+                swap_for_structures(aa[j + 1], aa[j]);
+            }
+        }
+    }
+    for(int i = 0; i < N; ++i) {
+        printf("Name: %s\n Group: %d\n", aa[i].name, aa[i].group);
+    }
+}
