@@ -1,0 +1,26 @@
+#include <stdio.h>
+
+enum coin {FLIGHT_MODE, DONT_BOTHER, ON_WORK, OFF, NIGHT_MODE};
+enum coin phone_mode;
+
+int main() {
+    printf("Please, choose a mode for your phone\n");
+    scanf_s("%d", &phone_mode);
+    switch(phone_mode) {
+        case FLIGHT_MODE:
+            printf("Flight mode is on");
+            break;
+        case DONT_BOTHER:
+            printf("Silent mode is on");
+            break;
+        case ON_WORK:
+            printf("Your phone is ready for working!");
+            break;
+        case OFF:
+            printf("The phone is ready to off! Goodbye.");
+            break;
+        case NIGHT_MODE:
+            printf("Only alarms working. Good night!");
+            break;
+    }
+}
